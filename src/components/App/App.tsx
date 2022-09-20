@@ -1,6 +1,6 @@
 import './app.scss';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
+// import { motion } from 'framer-motion';
+// import { gsap } from 'gsap';
 
 const App = () => {
 
@@ -13,9 +13,9 @@ const App = () => {
                     <div className="">Menu</div>
                 </div>
             </div>
-            <div className="">
-                <div className="">We make it happen!</div>
-                <div className="">
+            <div className="BskDownCvr">
+                <div className="BskDown1">We make it happen!</div>
+                <div className="BskDown2">
                     <div className="">Websites</div>
                     <div className="">Apps</div>
                     <div className="">Brands</div>

@@ -16,8 +16,39 @@ body {
         padding: 15px 1%;
 
         .BskLogo {
-            font-size: 20px;
+            font-size: u1.rem(25);
             font-weight: 700;
+        }
+
+        .BskLinks {
+            display: flex;
+            font-size: u1.rem(16);
+            font-weight: 600;
+            letter-spacing: 1px;
+
+            > div {
+                margin-inline: 0 30px;
+            }
+        }
+    }
+
+    .BskDownCvr {
+        width: 90%;
+        margin: 23vh auto 0;
+
+        .BskDown1 {
+            font-weight: 700;
+            font-size: u1.rem(17);
+        }
+        .BskDown2 {
+            display: flex;
+            margin: 0;
+            font-size: u1.rem(110);
+            font-weight: 700;
+
+            > div {
+                margin: -15px u1.rem(60) 0 0;
+            }
         }
     }
 }
