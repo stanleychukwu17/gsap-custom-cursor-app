@@ -1,0 +1,74 @@
+@use 'sass:math';
+@use 'colors' as color_pack;
+
+
+// converts numbers from pixels to rem
+// inside the function, we want to make sure that the argument received does not have any units such as px, rem, em e.t.c
+@function rem($pixels) {
+    @if math.is-unitless($pixels) {
+        $final: math.div($pixels, 16) + rem;
+        @return $final
+    } @else {
+        @error 'Don\'t send in arguments with units attached to it, please use the rem functions with only numbers' 
+    }
+};
+
+// the function below converts from mostly pixles to em
+@function em($pixels) {
+    @if math.is-unitless($pixels) {
+        $final: math.div($pixels, 16) + em;
+        @return $final
+    } @else {
+        @error 'Don\'t send in arguments with units attached to it, please use the em functions with only numbers' 
+    }
+};
+
+
+// for block displays
+@mixin block_display($hidden: yes) {
+    display: block;
+    position: relative;
+    @if ($hidden == yes) {
+        overflow: hidden;
+    }
+};
+
+// for flex displays
+@mixin flex_display($jt: 'space-between') {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+};
+
+@mixin neo_button() {
+    position: relative;
+    padding: rem(20) rem(38);
+    cursor: pointer;
+    border: 0;
+    color: color_pack.$text_color;
+    font-size: rem(30);
+    font-weight: bold;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #dddde1, #ffffff);
+    box-shadow:  20px 20px 60px #d0d1d5,
+                 -20px -20px 60px #ffffff;
+    transition: all .5s ease-out;
+
+
+    a {
+        text-decoration: none;
+        color: currentColor;
+        // -webkit-text-fill-color: white;
+        // -webkit-text-stroke-width: 1px;
+        // -webkit-text-stroke-color: #000;
+    }
+
+    &:hover {
+        top: -1px;
+        background: linear-gradient(145deg, lighten(#dddde1, 5), lighten(#dddde1, 7));
+    }
+
+    &:active {
+        top: 1px;
+    }
+};
