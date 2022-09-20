@@ -6,7 +6,21 @@ const App = () => {
 
     return (
         <div className="AppMain">
-
+            <div className="BskHeader">
+                <div className="BskLogo">STANLEY TO!</div>
+                <div className="BskLinks">
+                    <div className="">Showreel</div>
+                    <div className="">Menu</div>
+                </div>
+            </div>
+            <div className="">
+                <div className="">We make it happen!</div>
+                <div className="">
+                    <div className="">Websites</div>
+                    <div className="">Apps</div>
+                    <div className="">Brands</div>
+                </div>
+            </div>
         </div>
     )
 }

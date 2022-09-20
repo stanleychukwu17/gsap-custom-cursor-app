@@ -2,35 +2,22 @@
 @use '../../styles/util/' as u1;
 
 
-
-.test1 {
-    @include u1.media(">=desktop") {
-        background-color: yellow;
-
-        &::after {
-            content: "desktop"
-        }
-    }
-    @include u1.media(">=tablet", "<desktop") {
-        background-color: skyblue;
-
-        &::after {
-            content: "tablet"
-        }
-    }
-
-    @include u1.media(">=phone", "<tablet") {
-        background-color: aquamarine;
-
-        &::after {
-            content: "phone"
-        }
-    }
-}
-
 body {
-    background-color: #1F2326 !important;
+    background-color: #f6f8f7 !important;
+    color: #26274c
 }
 .AppMain {
     @include u1.block_display();
+
+    .BskHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 1%;
+
+        .BskLogo {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
 }
