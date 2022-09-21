@@ -2,6 +2,7 @@ import './app.scss';
 // import { motion } from 'framer-motion';
 // import { gsap } from 'gsap';
 
+
 const App = () => {
 
     return (
@@ -24,4 +25,5 @@ const App = () => {
         </div>
     )
 }
+
 export default App;
