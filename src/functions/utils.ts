@@ -44,4 +44,4 @@ const getSiblings = (e:HTMLElement) => {
 }
 
 
-export {getMousePosition, lerP, getSiblings }
+export {getMousePosition, lerP, getSiblings}

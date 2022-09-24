@@ -10,7 +10,7 @@ const App = () => {
             <div className="BskHeader">
                 <div className="BskLogo">STANLEY TO!</div>
                 <div className="BskLinks">
-                    <div className="">Showreel</div>
+                    <div className="">Show reel</div>
                     <div className="">Menu</div>
                 </div>
             </div>
