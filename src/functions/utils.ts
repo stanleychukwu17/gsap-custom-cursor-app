@@ -43,5 +43,11 @@ const getSiblings = (e:HTMLElement) => {
     return siblings
 }
 
+// this Cursor class can be used for any element that you'd like to use as a custom cursor
+class Cursor {
+    constructor(el: HTMLDivElement) {
 
-export {getMousePosition, lerP, getSiblings}
+    }
+}
+
+export {getMousePosition, lerP, getSiblings, Cursor}

@@ -52,3 +52,46 @@ body {
         }
     }
 }
+
+
+// styling the cursor elements
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    // contain: layout style size;
+    pointer-events: none;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -24px;
+        left: -24px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        transform: scale(0.2);
+        background-color: #26274c;
+    }
+
+    .cursor-media {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        width: 350px;
+        height: 350px;
+        border-radius: 100%;
+        // transform: scale(1);
+        transform: scale(0);
+        // margin: -175px 0 0 -175px;
+
+        video {
+            position: absolute;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
