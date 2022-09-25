@@ -69,6 +69,9 @@ class Cursor {
             this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
             gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
 
+            // calls the function to scale the mouse when ever we hover on any of the special links
+            this.onScaleMouse()
+
             /** 
                 calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
                 before the next browser repaint. the method takes a callback as an argument to be executed before the repaint is done.
@@ -83,6 +86,18 @@ class Cursor {
         // assign the mouse function to update the mouse position
         //@ts-ignore
         window.addEventListener("mousemove", this.onMouseMoveEv);
+    }
+
+    onScaleMouse() {
+        this.item.forEach((echElement, index) => {
+            echElement.addEventListener('mouseenter', () => {
+                this.scaleAnimation(this.cursor.children[0], 0.8)
+            })
+        })
+    }
+
+    scaleAnimation(el: Element, amt: number) {
+        gsap.to(el, {duration: .6, scale: amt, ease: Power3.easeOut})
     }
 
     Render () {
