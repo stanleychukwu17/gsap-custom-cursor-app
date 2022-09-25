@@ -1,10 +1,12 @@
 @forward '../../styles/globals/';
 @use '../../styles/util/' as u1;
 
+$backgroundColor: #f6f8f7;
+$textColor: #26274c;
 
 body {
-    background-color: #f6f8f7 !important;
-    color: #26274c
+    background-color: $backgroundColor !important;
+    color: $textColor;
 }
 .AppMain {
     @include u1.block_display();
@@ -46,8 +48,16 @@ body {
             font-size: u1.rem(110);
             font-weight: 700;
 
-            > div {
+            .Bsk-Ech {
                 margin: -15px u1.rem(60) 0 0;
+                color: $backgroundColor;
+                text-shadow: 1px 1px 0 $textColor, -1px -1px 0 $textColor;
+
+                &:hover {
+                    color: $textColor;
+                    text-shadow: none;
+                    transition: all .4s ease-out;
+                }
             }
         }
     }
@@ -73,7 +83,7 @@ body {
         height: 48px;
         border-radius: 50%;
         transform: scale(0.2);
-        background-color: #26274c;
+        background-color: $textColor;
     }
 
     .cursor-media {
