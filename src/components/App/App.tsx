@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './app.scss';
 // import { motion } from 'framer-motion';
 // import { gsap } from 'gsap';
 
-import { getMousePosition } from '../../functions/utils';
+import { getMousePosition, Cursor } from '../../functions/utils';
 
 
 // import the video files
@@ -17,15 +17,24 @@ type mouseType = {x:number, y:number}
 
 const App = () => {
     const [mouse, setMouse] = useState<mouseType>({} as mouseType)
+    // const [cursor, setCursor] = useState<Cursor>({} as Cursor)
+    const cursor = useRef<Cursor>({} as Cursor)
+
 
     useEffect(() => {
+        cursor.current = new Cursor(document.querySelector('.cursor')!, mouse)
+    }, [mouse])
+
+    useEffect(() => {
+        // updates the mouse position
+        const trackMouse = (ev:MouseEvent) => setMouse(getMousePosition(ev))
 
         // adds an event listener that allows us to know the current position of the user mouse.. if this was a production app, i would have removed the event when the user left the page
-        window.addEventListener("mousemove", (ev:MouseEvent) => {
-            // updates the mouse position
-            setMouse(getMousePosition(ev))
-        })
+        window.addEventListener("mousemove", trackMouse)
 
+        // return () => {
+        //     window.removeEventListener("mouseenter", trackMouse)
+        // }
     }, [])
     
 
@@ -41,9 +50,9 @@ const App = () => {
             <div className="BskDownCvr">
                 <div className="BskDown1">We make it happen!</div>
                 <div className="BskDown2">
-                    <div className="">Websites</div>
-                    <div className="">Apps</div>
-                    <div className="">Brands</div>
+                    <div className="Bsk-Ech">Websites</div>
+                    <div className="Bsk-Ech">Apps</div>
+                    <div className="Bsk-Ech">Brands</div>
                 </div>
             </div>
 
