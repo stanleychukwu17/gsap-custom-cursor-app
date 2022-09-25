@@ -64,30 +64,29 @@ class Cursor {
             this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
             this.cursor.style.opacity = '1'
 
-            console.log('now moving')
             /** 
                 calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
                 before the next browser repaint. the method takes a callback as an argument to be executed before the repaint is done.
-                e.g
-                    let request;
-                    const performAnimation = () => {
-                        request = window.requestAnimationFrame(performAnimation)
-                    }
-                    requestAnimationFrame(performAnimation)
+                // requestAnimationFrame(this.Render(mouse))
             */
-            requestAnimationFrame(this.Render)
+
+            // instead of using the window.requestAnimationFrame() method, i decided to just call the this.Render method instead.
+            this.Render(mouse)
+
+            //@ts-ignore
+            window.removeEventListener('mousemove', this.onMouseMoveEv)
         }
 
 
         // assign the mouse function to update the mouse position
-        window.addEventListener("mousemove", (ev:MouseEvent) => {
-            console.log(this)
-            this.onMouseMoveEv()
-        });
+        //@ts-ignore
+        window.addEventListener("mousemove", this.onMouseMoveEv);
     }
 
-    Render () {
-
+    Render (mouse: {x: number, y: number}) {
+        this.cursorConfigs.x.previous = mouse.x
+        this.cursorConfigs.y.previous = mouse.y
+        console.log('somebody calling me')
     }
 }
 
