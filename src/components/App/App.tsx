@@ -20,9 +20,17 @@ const App = () => {
     // const [cursor, setCursor] = useState<Cursor>({} as Cursor)
     const cursor = useRef<Cursor>({} as Cursor)
 
-
     useEffect(() => {
-        cursor.current = new Cursor(document.querySelector('.cursor')!, mouse)
+        if (cursor.current instanceof Cursor) {
+            cursor.current.updateMouse(mouse)
+            console.log('i no do again', mouse)
+        } else {
+            cursor.current = new Cursor(document.querySelector('.cursor')!, mouse)
+        }
+
+        return () => {
+            cursor.current.killAllEventListeners()
+        }
     }, [mouse])
 
     useEffect(() => {
@@ -58,7 +66,7 @@ const App = () => {
 
 
             {/* Cursor */}
-            <div className="cursor">
+            <div className="cursor media-blend">
                 <div className="cursor-media">
                     <video data-media='website' src={website} preload="auto" autoPlay muted loop></video>
                     <video data-media='app' src={app} preload="auto" autoPlay muted loop></video>

@@ -89,6 +89,15 @@ body {
         background-color: $textColor;
     }
 
+    &.media-blend {
+        z-index: 100;
+        mix-blend-mode: exclusion;
+
+        .cursor-media {
+            filter: invert(1);
+        }
+    }
+
     .cursor-media {
         display: block;
         position: relative;

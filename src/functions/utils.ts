@@ -53,7 +53,6 @@ class Cursor {
         x: {previous: 0, current: 0, amt:.1},
         y: {previous: 0, current: 0, amt:.1}
     }
-    public onMouseMoveEv: Function;
     public mouse: {x:number, y:number}
 
     constructor(el: HTMLDivElement, mouse: {x: number, y: number}) {
@@ -62,30 +61,41 @@ class Cursor {
         this.item = document.querySelectorAll('.Bsk-Ech')
         this.mouse = mouse
 
-        // updates the cursor position every time the mouse moves
-        this.onMouseMoveEv = () => {
-            this.mouse = mouse
-            this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
-            this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
-            gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
-
-            // calls the function to scale the mouse when ever we hover on any of the special links
-            this.onScaleMouse()
-
-            /** 
-                calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
-                before the next browser repaint. the method takes a callback as an argument to be executed before the repaint is done.
-            */
-            requestAnimationFrame(() => this.Render())
-
-            //@ts-ignore
-            window.removeEventListener('mousemove', this.onMouseMoveEv)
-        }
-
-
-        // assign the mouse function to update the mouse position
+        this.onMouseMoveEv()
         //@ts-ignore
         window.addEventListener("mousemove", this.onMouseMoveEv);
+    }
+
+    updateMouse(mouse: {x:number, y:number}) {
+        this.mouse = mouse
+        this.onMouseMoveEv()
+        console.log('calling from update', mouse)
+    }
+
+    // updates the cursor position every time the mouse moves
+    onMouseMoveEv () {
+        const mouse = this.mouse
+        // console.log(mouse, this, 'from her!')
+        if (typeof mouse === 'undefined') { return false }
+
+        // this.mouse = mouse
+        this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
+        this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
+        gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
+
+        // calls the function to scale the mouse when ever we hover on any of the special links
+        this.onScaleMouse()
+
+        /** 
+            calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
+            before the next browser repaint. the method takes a callback as an argument to be executed before the repaint is done.
+        */
+        requestAnimationFrame(() => this.Render())
+    }
+
+    killAllEventListeners () {
+        //@ts-ignore
+        window.removeEventListener('mousemove', this.onMouseMoveEv)
     }
 
     onScaleMouse() {
