@@ -89,13 +89,24 @@ class Cursor {
     }
 
     onScaleMouse() {
+        const cursorMedia = this.cursor.children[0]
         this.item.forEach((echElement, index) => {
+            if (echElement.matches(':hover')) {
+                /**
+                    there is a small issue, if you refresh the page and your mouse is on the element.. the scale will not occur because we are relying on mousemove to detect if the mouse is on the element. but the below fixes it
+                    i didn't even know much on .matches until today, use the links below to learn more about .matches() which is a javascript method.
+                    https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+                    https://www.w3schools.com/jsref/met_element_matches.asp
+                */
+                this.scaleAnimation(cursorMedia, 1.2)
+            }
+
             echElement.addEventListener('mouseenter', () => {
-                this.scaleAnimation(this.cursor.children[0], 0.8)
+                this.scaleAnimation(cursorMedia, 1.2)
             })
 
             echElement.addEventListener('mouseleave', () => {
-                this.scaleAnimation(this.cursor.children[0], 0)
+                this.scaleAnimation(cursorMedia, 0)
             })
         })
     }
@@ -124,7 +135,7 @@ class Cursor {
             // Ler.p - A ler returns the value between two numbers at a specified, decimal midpoint
             // please check the video for more links regarding this lerP function
             // honestly, i still don't know what the hell a lerP function is, so you can use the link below to learn more on lerp
-
+            // https://www.trysmudford.com/blog/linear-interpolation-functions/
 
             //@ts-ignore
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
