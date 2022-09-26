@@ -50,9 +50,9 @@ const App = () => {
             <div className="BskDownCvr">
                 <div className="BskDown1">We make it happen!</div>
                 <div className="BskDown2">
-                    <div className="Bsk-Ech">Websites</div>
-                    <div className="Bsk-Ech">Apps</div>
-                    <div className="Bsk-Ech">Brands</div>
+                    <div className="Bsk-Ech" data-src-show='website'>Websites</div>
+                    <div className="Bsk-Ech" data-src-show='app'>Apps</div>
+                    <div className="Bsk-Ech" data-src-show='brand'>Brands</div>
                 </div>
             </div>
 
@@ -60,9 +60,9 @@ const App = () => {
             {/* Cursor */}
             <div className="cursor">
                 <div className="cursor-media">
-                    <video src={website} preload="auto" autoPlay muted loop id="websites"></video>
-                    <video src={app} preload="auto" autoPlay muted loop id="apps"></video>
-                    <video src={brand} preload="auto" autoPlay muted loop id="branding"></video>
+                    <video data-media='website' src={website} preload="auto" autoPlay muted loop></video>
+                    <video data-media='app' src={app} preload="auto" autoPlay muted loop></video>
+                    <video data-media='brand' src={brand} preload="auto" autoPlay muted loop></video>
                 </div>
             </div>
         </div>

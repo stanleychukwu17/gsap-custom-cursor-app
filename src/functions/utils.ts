@@ -22,7 +22,7 @@ const getMousePosition = (e:MouseEvent): {x: number, y:number} => {
 
 
 // Get siblings
-const getSiblings = (e:HTMLElement) => {
+const getSiblings = (e:Element) => {
     // for collecting siblings
     let siblings: HTMLElement|ChildNode[] = []
 
@@ -98,10 +98,12 @@ class Cursor {
                     https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
                     https://www.w3schools.com/jsref/met_element_matches.asp
                 */
-                this.scaleAnimation(cursorMedia, 1.2)
+                // this.scaleAnimation(cursorMedia, 1.2)
+                // decided not to use it again, didn't see any difference and am not ready to debug
             }
 
             echElement.addEventListener('mouseenter', () => {
+                this.showMedia4ThisElement(echElement)
                 this.scaleAnimation(cursorMedia, 1.2)
             })
 
@@ -113,6 +115,20 @@ class Cursor {
 
     scaleAnimation(el: Element, amt: number) {
         gsap.to(el, {duration: .6, scale: amt, ease: Power3.easeOut})
+    }
+
+    showMedia4ThisElement(el: Element) {
+        const srcAttr = el.getAttribute('data-src-show')
+        const theMediaToShow = document.querySelector(`[data-media="${srcAttr}"]`)
+        const siblingsOfThisMedia = getSiblings(theMediaToShow!)
+
+        // we bring the media to show to the front of the que
+        gsap.set(theMediaToShow, {zIndex: 4, opacity: 1})
+
+        // we take siblings to the back of the que
+        siblingsOfThisMedia.forEach(s => {
+            gsap.set(s, {zIndex: 1, opacity: 0})
+        })
     }
 
     Render () {

@@ -53,6 +53,7 @@ body {
                 color: $backgroundColor;
                 text-shadow: 1px 1px 0 $textColor, -1px -1px 0 $textColor;
                 transition: all .4s ease-in-out;
+                cursor: default;
 
                 &:hover {
                     color: $textColor;
@@ -73,7 +74,7 @@ body {
     z-index: 10;
     // contain: layout style size;
     pointer-events: none;
-    transition: transform .2s linear;
+    transition: transform .1s linear;
 
     &::before {
         content: "";
