@@ -123,19 +123,15 @@ class Cursor {
             //WTF IS LER.P?
             // Ler.p - A ler returns the value between two numbers at a specified, decimal midpoint
             // please check the video for more links regarding this lerP function
+            // honestly, i still don't know what the hell a lerP function is, so you can use the link below to learn more on lerp
+
 
             //@ts-ignore
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
         }
 
-        this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px)
-            translateY(${this.cursorConfigs.y.previous}px)`
-        // gsap.to(this.cursor, {
-        //     x: `${this.cursorConfigs.x.previous}px`,
-        //     y:`${this.cursorConfigs.y.previous}px`,
-        //     duration: 0.01,
-        //     ease: Power3.easeOut
-        // })
+        this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY(${this.cursorConfigs.y.previous}px)`
+        // gsap.to(this.cursor, { x: `${this.cursorConfigs.x.previous}px`, y:`${this.cursorConfigs.y.previous}px`, duration: 0.01, ease: Power3.easeOut})
 
         requestAnimationFrame(() => this.Render())
     }
