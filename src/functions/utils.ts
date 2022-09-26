@@ -100,6 +100,7 @@ class Cursor {
 
     onScaleMouse() {
         const cursorMedia = this.cursor.children[0]
+        console.log('event added!')
         this.item.forEach((echElement, index) => {
             if (echElement.matches(':hover')) {
                 /**

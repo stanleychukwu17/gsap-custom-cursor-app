@@ -23,7 +23,6 @@ const App = () => {
     useEffect(() => {
         if (cursor.current instanceof Cursor) {
             cursor.current.updateMouse(mouse)
-            console.log('i no do again', mouse)
         } else {
             cursor.current = new Cursor(document.querySelector('.cursor')!, mouse)
         }
