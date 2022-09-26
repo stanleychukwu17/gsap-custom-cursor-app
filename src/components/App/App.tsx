@@ -26,10 +26,6 @@ const App = () => {
         } else {
             cursor.current = new Cursor(document.querySelector('.cursor')!, mouse)
         }
-
-        return () => {
-            cursor.current.killAllEventListeners()
-        }
     }, [mouse])
 
     useEffect(() => {
@@ -39,9 +35,10 @@ const App = () => {
         // adds an event listener that allows us to know the current position of the user mouse.. if this was a production app, i would have removed the event when the user left the page
         window.addEventListener("mousemove", trackMouse)
 
-        // return () => {
-        //     window.removeEventListener("mouseenter", trackMouse)
-        // }
+        return function cleanup() {
+            window.removeEventListener("mouseenter", trackMouse)
+            cursor.current.killAllEventListeners()
+        };
     }, [])
     
 

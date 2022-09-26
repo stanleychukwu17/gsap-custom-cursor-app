@@ -3,6 +3,12 @@ import {gsap, Power3} from "gsap";
 // Linear interpolation
 const lerP = (a: number, b: number, n: number): number => {
     return (1-n) * a+n * b;
+
+    //WTF IS LER.P?
+    // Ler.p - A ler returns the value between two numbers at a specified, decimal midpoint
+    // please check the video for more links regarding this lerP function
+    // honestly, i still don't know what the hell a lerP function is, so you can use the link below to learn more on lerp
+    // https://www.trysmudford.com/blog/linear-interpolation-functions/
 }
 
 // Gets the mouse position
@@ -19,7 +25,6 @@ const getMousePosition = (e:MouseEvent): {x: number, y:number} => {
 
     return {x: posX, y: posY}
 };
-
 
 // Get siblings
 const getSiblings = (e:Element) => {
@@ -45,6 +50,7 @@ const getSiblings = (e:Element) => {
     return siblings
 }
 
+
 // this Cursor class can be used for any element that you'd like to use as a custom cursor
 class Cursor {
     public cursor:HTMLDivElement;
@@ -62,6 +68,8 @@ class Cursor {
         this.mouse = mouse
 
         this.onMouseMoveEv()
+        this.onScaleMouse() // calls the function to scale the mouse when ever we hover on any of the special links
+
         //@ts-ignore
         window.addEventListener("mousemove", this.onMouseMoveEv);
     }
@@ -69,7 +77,7 @@ class Cursor {
     updateMouse(mouse: {x:number, y:number}) {
         this.mouse = mouse
         this.onMouseMoveEv()
-        console.log('calling from update', mouse)
+        // console.log('calling from update', mouse)
     }
 
     // updates the cursor position every time the mouse moves
@@ -82,9 +90,6 @@ class Cursor {
         this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
         this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
         gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
-
-        // calls the function to scale the mouse when ever we hover on any of the special links
-        this.onScaleMouse()
 
         /** 
             calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
@@ -100,7 +105,7 @@ class Cursor {
 
     onScaleMouse() {
         const cursorMedia = this.cursor.children[0]
-        console.log('event added!')
+
         this.item.forEach((echElement, index) => {
             if (echElement.matches(':hover')) {
                 /**
@@ -158,12 +163,6 @@ class Cursor {
             as simple as the above and readable as well
         */
         for (const key in this.cursorConfigs) {
-            //WTF IS LER.P?
-            // Ler.p - A ler returns the value between two numbers at a specified, decimal midpoint
-            // please check the video for more links regarding this lerP function
-            // honestly, i still don't know what the hell a lerP function is, so you can use the link below to learn more on lerp
-            // https://www.trysmudford.com/blog/linear-interpolation-functions/
-
             //@ts-ignore
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
         }
