@@ -93,6 +93,10 @@ class Cursor {
             echElement.addEventListener('mouseenter', () => {
                 this.scaleAnimation(this.cursor.children[0], 0.8)
             })
+
+            echElement.addEventListener('mouseleave', () => {
+                this.scaleAnimation(this.cursor.children[0], 0)
+            })
         })
     }
 
@@ -124,14 +128,14 @@ class Cursor {
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
         }
 
-        // this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px)
-        //     translateY(${this.cursorConfigs.y.previous}px)`
-        gsap.to(this.cursor, {
-            x: `${this.cursorConfigs.x.previous}px`,
-            y:`${this.cursorConfigs.y.previous}px`,
-            duration: 0.01,
-            ease: Power3.easeOut
-        })
+        this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px)
+            translateY(${this.cursorConfigs.y.previous}px)`
+        // gsap.to(this.cursor, {
+        //     x: `${this.cursorConfigs.x.previous}px`,
+        //     y:`${this.cursorConfigs.y.previous}px`,
+        //     duration: 0.01,
+        //     ease: Power3.easeOut
+        // })
 
         requestAnimationFrame(() => this.Render())
     }

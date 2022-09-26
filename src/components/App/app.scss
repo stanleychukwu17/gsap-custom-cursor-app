@@ -52,11 +52,12 @@ body {
                 margin: -15px u1.rem(60) 0 0;
                 color: $backgroundColor;
                 text-shadow: 1px 1px 0 $textColor, -1px -1px 0 $textColor;
+                transition: all .4s ease-in-out;
 
                 &:hover {
                     color: $textColor;
                     text-shadow: none;
-                    transition: all .4s ease-out;
+                    scale: 1.1
                 }
             }
         }
@@ -72,6 +73,7 @@ body {
     z-index: 10;
     // contain: layout style size;
     pointer-events: none;
+    transition: transform .2s linear;
 
     &::before {
         content: "";
