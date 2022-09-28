@@ -39,7 +39,6 @@ const App = () => {
             cursor.current.killAllEventListeners() // this .killAllEventListeners() method, kills all the event listeners added to the window object
         };
     }, [])
-    
 
     return (
         <div className="AppMain">
