@@ -13,8 +13,8 @@ const lerP = (a: number, b: number, n: number): number => {
 
 // Gets the mouse position
 const getMousePosition = (e:MouseEvent): {x: number, y:number} => {
-    let posX = 0
-    let posY = 0
+    let posX:number = 0
+    let posY:number = 0
     if (!e) e = window.event as MouseEvent;
     // or you can rewrite the above as = if (!e) e = window.event!;
 
@@ -29,7 +29,7 @@ const getMousePosition = (e:MouseEvent): {x: number, y:number} => {
 // Get siblings
 const getSiblings = (e:Element) => {
     // for collecting siblings
-    let siblings: HTMLElement|ChildNode[] = []
+    let siblings:ChildNode[] = []
 
     // if no parent, return no sibling
     if (!e.parentNode) {
@@ -38,12 +38,15 @@ const getSiblings = (e:Element) => {
 
     // first child of the parent node
     let sibling = e.parentNode.firstChild
+
     //collecting siblings
     while (sibling) {
         if (sibling.nodeType === 1 && sibling !== e) {
+            // remember, we only want the siblings of the Element received
             siblings.push(sibling)
         }
 
+        // moves on to the next sibling
         sibling = sibling.nextSibling
     }
 
