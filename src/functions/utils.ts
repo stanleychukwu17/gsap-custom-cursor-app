@@ -57,18 +57,20 @@ const getSiblings = (e:Element) => {
 // this Cursor class can be used for any element that you'd like to use as a custom cursor
 class Cursor {
     public cursor:HTMLDivElement;
-    public item:NodeListOf<HTMLDivElement>;
+    public item:NodeListOf<HTMLDivElement>; // this should have been 'items' instead of 'item'
+
+    // previous: the previous position of mouse, current: the current position of the mouse, amt: the percentage of which to animate from previous to current
     public cursorConfigs = {
         x: {previous: 0, current: 0, amt:.1},
         y: {previous: 0, current: 0, amt:.1}
     }
-    public mouse: {x:number, y:number}
+    public mouse: {x:number, y:number} = {x:0, y:0} // the mouse position, updated everyTime the mouse position changes
 
     constructor(el: HTMLDivElement, mouse: {x: number, y: number}) {
         this.cursor = el
         this.cursor.style.opacity = '0'
-        this.item = document.querySelectorAll('.Bsk-Ech')
-        this.mouse = mouse
+        this.item = document.querySelectorAll('.Bsk-Ech') // these are the special links, anytime the mouse hovers on any of them, the .onScaleMouse() method is called so that the custom cursor can scale and display custom information
+        this.mouse = mouse // the updated mouse position
 
         this.onMouseMoveEv()
         this.onScaleMouse() // calls the function to scale the mouse when ever we hover on any of the special links
@@ -77,37 +79,41 @@ class Cursor {
         window.addEventListener("mousemove", this.onMouseMoveEv);
     }
 
-    updateMouse(mouse: {x:number, y:number}) {
+    // a setter method responsible for setting the mouse position, also calls the .onMouseMoveEv() function
+    updateMouse(mouse: {x:number, y:number}): void {
         this.mouse = mouse
         this.onMouseMoveEv()
-        // console.log('calling from update', mouse)
+        // console.log('calling from update mouse function', mouse)
     }
 
-    // updates the cursor position every time the mouse moves
-    onMouseMoveEv () {
-        const mouse = this.mouse
+    // moves the custom cursor to where current position of the user mouse(i.e the this.mouse)
+    onMouseMoveEv (): void {
         // console.log(mouse, this, 'from her!')
-        if (typeof mouse === 'undefined') { return false }
+        const mouse = this.mouse
 
-        // this.mouse = mouse
+        // update the configuration that will be used to animate the custom cursor
         this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
         this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
+
+        // changes the cursor opacity, you know we made the custom-cursor opacity 0 in the constructor method
         gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
 
         /** 
             calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
-            before the next browser repaint. the method takes a callback as an argument to be executed before the repaint is done.
+            before the next browser repaint. the method takes a callback as an argument to be executed before the browser repaint is done.
         */
         requestAnimationFrame(() => this.Render())
     }
 
-    killAllEventListeners () {
+    // kills all the events added the window object
+    killAllEventListeners (): void {
         //@ts-ignore
         window.removeEventListener('mousemove', this.onMouseMoveEv)
     }
 
+    // the method that scales the custom cursor. once the mouse comes over any of the custom links, then onScaleMouse() method is called.
     onScaleMouse() {
-        const cursorMedia = this.cursor.children[0]
+        const cursorMedia: Element = this.cursor.children[0]
 
         this.item.forEach((echElement, index) => {
             if (echElement.matches(':hover')) {
@@ -132,10 +138,12 @@ class Cursor {
         })
     }
 
+    // gsap handling the scaling up and down of the custom cursor
     scaleAnimation(el: Element, amt: number) {
         gsap.to(el, {duration: .6, scale: amt, ease: Power3.easeOut})
     }
 
+    // shows the correct media(in this case, the correct video). i.e depending on the special-links been hovered on
     showMedia4ThisElement(el: Element) {
         const srcAttr = el.getAttribute('data-src-show')
         const theMediaToShow = document.querySelector(`[data-media="${srcAttr}"]`)
@@ -155,21 +163,22 @@ class Cursor {
         this.cursorConfigs.y.previous = this.mouse.y
 
         /**
-            i feel like he over engineered the problem below, 
-            we could simply have done
+            i feel like he over engineered the problem below, we could simply have done
             let x = this.cursorConfigs.x
             let y = this.cursorConfigs.y
 
             this.cursorConfigs.x.previous = lerP(x.previous, x.current, x.amt)
             this.cursorConfigs.y.previous = lerP(y.previous, y.current, y.amt)
 
-            as simple as the above and readable as well
+            as simple as the above and readable as well, i've also tested the code and it works perfectly
         */
         for (const key in this.cursorConfigs) {
             //@ts-ignore
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
         }
 
+        // updates the css transform property of the custom cursor.. i tried using gsap to run this animation, but it was not smooth. So i decided to edit the transition property of the custom cursor
+        // i.e transition: transform .1s linear; targets only the transform property, you know we are animating the opacity
         this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY(${this.cursorConfigs.y.previous}px)`
         // gsap.to(this.cursor, { x: `${this.cursorConfigs.x.previous}px`, y:`${this.cursorConfigs.y.previous}px`, duration: 0.01, ease: Power3.easeOut})
 
