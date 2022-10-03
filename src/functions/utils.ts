@@ -86,7 +86,7 @@ class Cursor {
         // console.log('calling from update mouse function', mouse)
     }
 
-    // moves the custom cursor to where current position of the user mouse(i.e the this.mouse)
+    // moves the custom cursor to the current position of the user mouse
     onMouseMoveEv (): void {
         // console.log(mouse, this, 'from her!')
         const mouse = this.mouse
@@ -105,7 +105,7 @@ class Cursor {
         requestAnimationFrame(() => this.Render())
     }
 
-    // kills all the events added the window object
+    // kills all the events added to the window object
     killAllEventListeners (): void {
         //@ts-ignore
         window.removeEventListener('mousemove', this.onMouseMoveEv)
@@ -113,7 +113,8 @@ class Cursor {
 
     // the method that scales the custom cursor. once the mouse comes over any of the custom links, then onScaleMouse() method is called.
     onScaleMouse() {
-        const cursorMedia: Element = this.cursor.children[0]
+        const $base = this
+        const cursorMedia: Element = $base.cursor.children[0]
 
         this.item.forEach((echElement, index) => {
             if (echElement.matches(':hover')) {
@@ -128,12 +129,14 @@ class Cursor {
             }
 
             echElement.addEventListener('mouseenter', () => {
-                this.showMedia4ThisElement(echElement)
-                this.scaleAnimation(cursorMedia, 1.2)
+                this.showMedia4ThisElement(echElement) // shows the video
+                this.scaleAnimation(cursorMedia, 1.2) // scales the cursor
+                $base.cursor.classList.add('media-blend') // add the special filter to the this.cursor
             })
 
             echElement.addEventListener('mouseleave', () => {
                 this.scaleAnimation(cursorMedia, 0)
+                $base.cursor.classList.remove('media-blend')
             })
         })
     }
