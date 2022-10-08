@@ -15,11 +15,11 @@ type mouseType = {x:number, y:number}
 
 const App = () => {
     const [mouse, setMouse] = useState<mouseType>({} as mouseType) // stores the co-ordinates of the mouse position
-    // const [cursor, setCursor] = useState<Cursor>({} as Cursor)
     const cursor = useRef<Cursor>({} as Cursor) // Inside the useEffect, this.current will be an instanceof cursor
 
+    // runs only when the coordinates of the mouse changes
     useEffect(() => {
-        // you know everyTime the mouse position changes, this useEffect function is called. so we do not want to create a new instance everyTime, instead, we update the mouse values
+        // you know everyTime the mouse position changes, this useEffect function is called. so we do not want to create a new instance everyTime, instead, we update the mouse values of the Cursor class
         if (cursor.current instanceof Cursor) {
             cursor.current.updateMouse(mouse)
         } else {

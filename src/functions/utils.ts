@@ -41,8 +41,7 @@ const getSiblings = (e:Element) => {
 
     //collecting siblings
     while (sibling) {
-        if (sibling.nodeType === 1 && sibling !== e) {
-            // remember, we only want the siblings of the Element received
+        if (sibling.nodeType === 1 && sibling !== e) { // remember, we only want the siblings of the Element received, hence we're doing 'sibling !== e'
             siblings.push(sibling)
         }
 
@@ -57,7 +56,7 @@ const getSiblings = (e:Element) => {
 // this Cursor class can be used for any element that you'd like to use as a custom cursor
 class Cursor {
     public cursor:HTMLDivElement;
-    public item:NodeListOf<HTMLDivElement>; // this should have been 'items' instead of 'item'
+    public item:NodeListOf<HTMLDivElement>; // this should have been 'items' instead of 'item', NodeListOf<HTMLDivElement> is an array of HTMLDivElement
 
     // previous: the previous position of mouse, current: the current position of the mouse, amt: the percentage of which to animate from previous to current
     public cursorConfigs = {
@@ -68,10 +67,9 @@ class Cursor {
 
     constructor(el: HTMLDivElement, mouse: {x: number, y: number}) {
         this.cursor = el
-        this.cursor.style.opacity = '0'
         this.item = document.querySelectorAll('.Bsk-Ech') // these are the special links, anytime the mouse hovers on any of them, the .onScaleMouse() method is called so that the custom cursor can scale and display custom information
-        this.mouse = mouse // the updated mouse position
 
+        this.updateMouse(mouse) // the updated mouse position
         this.onMouseMoveEv()
         this.onScaleMouse() // calls the function to scale the mouse when ever we hover on any of the special links
 
@@ -83,32 +81,28 @@ class Cursor {
     updateMouse(mouse: {x:number, y:number}): void {
         this.mouse = mouse
         this.onMouseMoveEv()
-        // console.log('calling from update mouse function', mouse)
-    }
-
-    // moves the custom cursor to the current position of the user mouse
-    onMouseMoveEv (): void {
-        // console.log(mouse, this, 'from her!')
-        const mouse = this.mouse
-
-        // update the configuration that will be used to animate the custom cursor
-        this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
-        this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
-
-        // changes the cursor opacity, you know we made the custom-cursor opacity 0 in the constructor method
-        gsap.to(this.cursor, {opacity: '1', duration: 1, ease: Power3.easeOut})
-
-        /** 
-            calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
-            before the next browser repaint. the method takes a callback as an argument to be executed before the browser repaint is done.
-        */
-        requestAnimationFrame(() => this.Render())
     }
 
     // kills all the events added to the window object
     killAllEventListeners (): void {
         //@ts-ignore
         window.removeEventListener('mousemove', this.onMouseMoveEv)
+    }
+
+    // moves the custom cursor to the current position of the user mouse
+    onMouseMoveEv (): void {
+        const mouse = this.mouse
+        // console.log(mouse, this, 'from her!')
+
+        // update the configuration that will be used to animate the custom cursor
+        this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x
+        this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y
+
+        /** 
+            calls the windows.requestAnimationFrame() method, this method tells the browser that you wish to perform an animation and makes sure the browser calls a specified function to update an animation
+            before the next browser repaint. the method takes a callback as an argument to be executed before the browser repaint is done.
+        */
+        requestAnimationFrame(() => this.Render())
     }
 
     // the method that scales the custom cursor. once the mouse comes over any of the custom links, then onScaleMouse() method is called.
@@ -175,6 +169,7 @@ class Cursor {
 
             as simple as the above and readable as well, i've also tested the code and it works perfectly
         */
+       // so we are using the lerP function to update the previous object of both the 'x and y keys', this allows for smooth animation of the cursor
         for (const key in this.cursorConfigs) {
             //@ts-ignore
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
