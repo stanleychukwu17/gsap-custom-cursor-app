@@ -119,7 +119,7 @@ class Cursor {
                     https://www.w3schools.com/jsref/met_element_matches.asp
                 */
                 // this.scaleAnimation(cursorMedia, 1.2)
-                // decided not to use it again, didn't see any difference and am not ready to debug
+                // decided not to use it again, didn't see any difference and am not ready to debug why there is no difference
             }
 
             echElement.addEventListener('mouseenter', () => {
@@ -153,6 +153,12 @@ class Cursor {
         siblingsOfThisMedia.forEach(s => {
             gsap.set(s, {zIndex: 1, opacity: 0})
         })
+
+        /**
+            going through this function, i feel like there is no need for the getSiblings() function. we could have just given all of them a class name like '.videoMedia', then we can do
+            gsap.set(document.querySelectorAll('.videoMedia'), {zIndex: 1, opacity: 0});
+            gsap.set(theMediaToShow, {zIndex: 4, opacity: 1});
+        */
     }
 
     Render () {
@@ -175,10 +181,10 @@ class Cursor {
             this.cursorConfigs[key].previous = lerP(this.cursorConfigs[key].previous, this.cursorConfigs[key].current, this.cursorConfigs[key].amt)
         }
 
-        // updates the css transform property of the custom cursor.. i tried using gsap to run this animation, but it was not smooth. So i decided to edit the transition property of the custom cursor
-        // i.e transition: transform .1s linear; targets only the transform property, you know we are animating the opacity
+        // updates the css transform property of the custom cursor.. i tried using gsap to run this animation, but it was not smooth. So i decided to edit the transition property of the custom cursor in the sass file(i.e app.scss)
+        // i.e transition: transform .1s linear; targets only the transform property
         this.cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY(${this.cursorConfigs.y.previous}px)`
-        // gsap.to(this.cursor, { x: `${this.cursorConfigs.x.previous}px`, y:`${this.cursorConfigs.y.previous}px`, duration: 0.01, ease: Power3.easeOut})
+        // gsap.to(this.cursor, { x: `${this.cursorConfigs.x.previous}px`, y:`${this.cursorConfigs.y.previous}px`, duration: 0.01, ease: Power3.easeOut}) - has a-lot of bugs and glitches, uncomment to see
 
         requestAnimationFrame(() => this.Render())
     }
